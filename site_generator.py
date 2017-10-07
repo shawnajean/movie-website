@@ -8,18 +8,34 @@ main_page_head = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Fresh Tomatoes!</title>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="First Project for Udacity's Full Stack Nanodegree">
+    <meta name="author" content="Shawna Jean">
 
-    <!-- Bootstrap 3 -->
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <!-- Bootstrap 4.0.0-beta -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
     <style type="text/css" media="screen">
         body {
-            padding-top: 80px;
+          padding-top: 54px;
         }
+
+        @media (min-width: 992px) {
+          body {
+            padding-top: 56px;
+          }
+        }
+
+        .portfolio-item {
+          margin-bottom: 30px;
+        }
+
+        .pagination {
+          margin-bottom: 30px;
+        }
+
         #trailer .modal-dialog {
             margin-top: 200px;
             width: 640px;
@@ -35,12 +51,7 @@ main_page_head = '''
             width: 100%;
             height: 100%;
         }
-        .movie-tile {
-            margin-bottom: 20px;
-            padding-top: 20px;
-        }
         .movie-tile:hover {
-            background-color: #EEE;
             cursor: pointer;
         }
         .scale-media {
@@ -57,6 +68,7 @@ main_page_head = '''
             background-color: white;
         }
     </style>
+
     <script type="text/javascript" charset="utf-8">
         // Pause the video when the modal is closed
         $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
@@ -103,18 +115,24 @@ main_page_content = '''
     </div>
 
     <!-- Main Page Content -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Shawna's Movie List</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
     <div class="container">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
-          </div>
+        <div class="row">
+            {movie_tiles}
         </div>
-      </div>
     </div>
-    <div class="container">
-      {movie_tiles}
-    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+
   </body>
 </html>
 '''
@@ -122,10 +140,17 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
-    <h2>{movie_title}</h2>
-</div>
+        <div class="col-lg-6 portfolio-item movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+            <div class="card h-100">
+                <img class="card-img-top" src="{poster_image_url}" alt=""/>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">{movie_title}</a>
+                    </h4>
+                    <p class="card-text">{movie_overview}</p>
+                </div>
+            </div>
+        </div>
 '''
 
 
@@ -133,19 +158,12 @@ def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
     content = ''
     for movie in movies:
-        # Extract the youtube ID from the url
-        youtube_id_match = re.search(
-            r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
-        youtube_id_match = youtube_id_match or re.search(
-            r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
-        trailer_youtube_id = (youtube_id_match.group(0) if youtube_id_match
-                              else None)
-
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id
+            trailer_youtube_id=movie.trailer_youtube_id,
+            movie_overview=movie.storyline.encode('utf-8')
         )
     return content
 
