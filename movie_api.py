@@ -41,6 +41,10 @@ def get_movie_list(list_id, movie_array):
 
     # Image paths will need this prepended
     image_url_pre = "https://image.tmdb.org/t/p/w500"
+
+    # YouTube key will need this prepended
+    youtube_url_pre = "https://www.youtube.com/watch?v="
+
     list_access_url = (
         "https://api.themoviedb.org/3/list/{list}?api_key={api_key}"
         "&language=en-US").format(list=str(list_id),
@@ -55,4 +59,4 @@ def get_movie_list(list_id, movie_array):
         movie_array.append(media.Movie(item.get('title'),
                                        item.get('overview'),
                                        image_url_pre + item.get('poster_path'),
-                                       get_trailer(item.get('id'))))
+                                       youtube_url_pre + get_trailer(item.get('id'))))
