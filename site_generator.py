@@ -18,14 +18,19 @@ main_page_head = '''
         body {
           padding-top: 54px;
         }
-
         @media (min-width: 992px) {
           body {
             padding-top: 56px;
           }
         }
+        a {
+          color: #551a8b;
+        }
         button.close {
           padding-left: 100%;
+        }
+        .movie-row {
+          padding-top: 15px;
         }
         .modal-header {
           border-bottom: none;
@@ -102,11 +107,9 @@ main_page_content = '''
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">Shawna's Movie List</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
-    <div class="container">
+    <div class="container movie-row">
         <div class="row">
             {movie_tiles}
         </div>
@@ -115,7 +118,6 @@ main_page_content = '''
     <!-- Bootstrap core JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
 
   </body>
 </html>
