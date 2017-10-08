@@ -18,7 +18,7 @@ First, clone this repository:
 
 Or download it using the green "Clone or download" button above and then clicking "Download ZIP".
 
-Once you have the repository downloaded, you'll need to create a new file in the project directly locally. The file needs to be named `config.py` and include your API key and list ID with these variable names:
+Once you have the repository downloaded, you'll need to create a new file in the project directory. The file needs to be named `config.py` and include your API key and list ID with these variable names:
 
 ```
 themoviedb_list_id = "XXXXX"
