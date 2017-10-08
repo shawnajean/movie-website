@@ -2,15 +2,12 @@ import webbrowser
 import os
 import re
 
-
 # Styles and scripting for the page
 main_page_head = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="First Project for Udacity's Full Stack Nanodegree">
-    <meta name="author" content="Shawna Jean">
 
     <!-- Bootstrap 4.0.0-beta -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -27,25 +24,18 @@ main_page_head = '''
             padding-top: 56px;
           }
         }
-
+        button.close {
+          padding-left: 100%;
+        }
+        .modal-header {
+          border-bottom: none;
+        }
         .portfolio-item {
           margin-bottom: 30px;
         }
-
-        .pagination {
-          margin-bottom: 30px;
-        }
-
         #trailer .modal-dialog {
             margin-top: 200px;
-            width: 640px;
-            height: 480px;
-        }
-        .hanging-close {
-            position: absolute;
-            top: -12px;
-            right: -12px;
-            z-index: 9001;
+            padding: 15px;
         }
         #trailer-video {
             width: 100%;
@@ -55,7 +45,7 @@ main_page_head = '''
             cursor: pointer;
         }
         .scale-media {
-            padding-bottom: 56.25%;
+            padding-bottom: 75%;
             position: relative;
         }
         .scale-media iframe {
@@ -71,7 +61,7 @@ main_page_head = '''
 
     <script type="text/javascript" charset="utf-8">
         // Pause the video when the modal is closed
-        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+        $(document).on('click', '.close, .modal-backdrop, .modal', function (event) {
             // Remove the src so the player itself gets removed, as this is the only
             // reliable way to ensure the video stops playing in IE
             $("#trailer-video-container").empty();
@@ -87,12 +77,6 @@ main_page_head = '''
               'frameborder': 0
             }));
         });
-        // Animate in the movies when the page loads
-        $(document).ready(function () {
-          $('.movie-tile').hide().first().show("fast", function showNext() {
-            $(this).next("div").show("fast", showNext);
-          });
-        });
     </script>
 </head>
 '''
@@ -103,13 +87,13 @@ main_page_content = '''
   <body>
     <!-- Trailer Video Modal -->
     <div class="modal" id="trailer">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
-            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
-          </a>
-          <div class="scale-media" id="trailer-video-container">
-          </div>
+      <div class="modal-dialog" role="document">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body scale-media" id="trailer-video-container">
         </div>
       </div>
     </div>
@@ -140,7 +124,7 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-        <div class="col-lg-6 portfolio-item movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+        <div class="col-lg-4 portfolio-item movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
             <div class="card h-100">
                 <img class="card-img-top" src="{poster_image_url}" alt=""/>
                 <div class="card-body">
