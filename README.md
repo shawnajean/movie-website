@@ -33,4 +33,4 @@ Once the config file is set up, you can generate your site by running:
 
 ## Modifying the site
 
-You can modify the styles and [title of the site(https://github.com/shawnajean/movie-website/blob/master/site_generator.py#L109) in the `site_generator.py` file.
+You can modify the styles and [title of the site](https://github.com/shawnajean/movie-website/blob/master/site_generator.py#L109) in the `site_generator.py` file.
